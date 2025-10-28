@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Eye, EyeOff, Lock, Mail, CheckCircle2, XCircle } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, CheckCircle2, XCircle, ArrowLeft } from 'lucide-react';
 
-const Login = () => {
+const Login = ({ onBackToProducts }) => {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
