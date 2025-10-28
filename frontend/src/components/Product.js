@@ -119,6 +119,13 @@ const Product = ({ onSignInRequired }) => {
   ];
 
   const handlePayment = async (product) => {
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      setSelectedProduct(product);
+      setShowLoginPrompt(true);
+      return;
+    }
+
     setIsProcessing(true);
     setPaymentResult(null);
     setSelectedProduct(product);
