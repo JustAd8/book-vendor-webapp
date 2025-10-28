@@ -79,6 +79,72 @@ async def get_status_checks():
     
     return status_checks
 
+# E-Commerce Routes
+@api_router.post("/checkout")
+async def checkout(checkout_data: CheckoutRequest):
+    """
+    Simulates payment gateway logic:
+    - If amount >= 49.99: SUCCESS
+    - If amount < 49.99: FAILED
+    - Successful orders are saved to MongoDB
+    """
+    try:
+        amount = checkout_data.amount
+        
+        # Payment simulation logic
+        if amount >= 49.99:
+            status = "SUCCESS"
+            message = "Payment Successful! Your order has been placed."
+            
+            # Create and save order to database
+            order = Order(amount=amount, status=status)
+            order_dict = order.model_dump()
+            order_dict['date'] = order_dict['date'].isoformat()
+            
+            await db.orders.insert_one(order_dict)
+            
+            return {
+                "status": status,
+                "message": message,
+                "order_id": order.id,
+                "amount": amount
+            }
+        else:
+            status = "FAILED"
+            message = f"Payment Failed! Minimum amount required is $49.99. You provided ${amount:.2f}."
+            
+            # Still save failed transaction for records
+            order = Order(amount=amount, status=status)
+            order_dict = order.model_dump()
+            order_dict['date'] = order_dict['date'].isoformat()
+            
+            await db.orders.insert_one(order_dict)
+            
+            return {
+                "status": status,
+                "message": message,
+                "amount": amount
+            }
+    except Exception as e:
+        logger.error(f"Checkout error: {str(e)}")
+        return {
+            "status": "ERROR",
+            "message": "An error occurred during checkout. Please try again.",
+            "error": str(e)
+        }
+
+@api_router.get("/orders", response_model=List[Order])
+async def get_orders():
+    """Retrieve all orders from database"""
+    orders = await db.orders.find({}, {"_id": 0}).to_list(1000)
+    
+    # Convert ISO string dates back to datetime objects
+    for order in orders:
+        if isinstance(order['date'], str):
+            order['date'] = datetime.fromisoformat(order['date'])
+    
+    return orders
+
 # Include the router in the main app
 app.include_router(api_router)
 
