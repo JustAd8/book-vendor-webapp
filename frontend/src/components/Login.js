@@ -71,6 +71,17 @@ const Login = ({ onBackToProducts }) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-gray-800 px-4 transition-colors duration-300">
       <div className="max-w-md w-full">
+        {/* Back Button */}
+        {onBackToProducts && (
+          <button
+            onClick={onBackToProducts}
+            className="mb-4 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Products</span>
+          </button>
+        )}
+        
         {/* Logo and Brand */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl shadow-xl mb-4 transform hover:rotate-12 transition-transform duration-300">
