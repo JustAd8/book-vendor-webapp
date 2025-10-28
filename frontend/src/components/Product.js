@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { ShoppingCart, CheckCircle, XCircle, BookOpen, DollarSign, Star, Sparkles } from 'lucide-react';
+import { ShoppingCart, CheckCircle, XCircle, BookOpen, DollarSign, Star, Sparkles, Lock } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const Product = () => {
+const Product = ({ onSignInRequired }) => {
+  const { isAuthenticated } = useAuth();
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentResult, setPaymentResult] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   const PRODUCTS = [
     {
