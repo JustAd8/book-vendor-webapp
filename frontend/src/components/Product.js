@@ -318,6 +318,45 @@ const Product = ({ onSignInRequired }) => {
         </div>
       )}
 
+      {/* Login Prompt Modal for Guest Users */}
+      {showLoginPrompt && !isAuthenticated && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-300">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 transform animate-in zoom-in duration-300">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Lock className="w-12 h-12 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Sign In Required
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Please sign in to purchase <span className="font-semibold">{selectedProduct?.name}</span>
+              </p>
+              
+              <div className="space-y-3">
+                <button
+                  onClick={() => {
+                    setShowLoginPrompt(false);
+                    onSignInRequired();
+                  }}
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 text-white font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+                >
+                  <Lock className="w-5 h-5" />
+                  Sign In Now
+                </button>
+                
+                <button
+                  onClick={() => setShowLoginPrompt(false)}
+                  className="w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold py-3 rounded-lg transition-all duration-200"
+                >
+                  Continue Browsing
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Info Section */}
       <div className="mt-12 text-center">
         <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-8 border border-indigo-200 dark:border-indigo-800">
