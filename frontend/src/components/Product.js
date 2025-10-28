@@ -249,10 +249,15 @@ const Product = ({ onSignInRequired }) => {
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     Processing...
                   </>
-                ) : (
+                ) : isAuthenticated ? (
                   <>
                     <ShoppingCart className="w-5 h-5" />
                     Buy Now
+                  </>
+                ) : (
+                  <>
+                    <Lock className="w-5 h-5" />
+                    Sign In to Purchase
                   </>
                 )}
               </button>
