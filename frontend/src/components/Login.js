@@ -154,7 +154,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-3 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 text-white font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             {isLoading ? (
               <>
@@ -171,11 +171,12 @@ const Login = () => {
         <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
           <p className="text-xs text-center text-gray-500 dark:text-gray-400">
             Test Credentials:<br />
-            <span className="font-mono bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+            <span className="font-mono bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded mt-1 inline-block">
               test@example.com / Test@123
             </span>
           </p>
         </div>
+      </div>
       </div>
     </div>
   );
